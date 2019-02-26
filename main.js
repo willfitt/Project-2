@@ -1,11 +1,4 @@
 
-// let myrows = document.getElementsByClassName("row");
-// // myrows.style.fontSize = "24px";
-// for(var i = 0; i < myrows.length; i++){
-//     myrows[i].style.fontSize = "24px"
-// }
-//the block above is fixed with the jquery below
-
 //below stuff should be helpful for the project?
 //the row is creates font-size is smaller because the line performing that action has already been calledd. move line 19 below the append to fix this.
 // $(function(){
@@ -14,15 +7,13 @@
 
 function addItem() {
     let myVal = $(".myInput").val();
-    let listItems = $(".list").children();
+    let listItems = $(".myList").children();
     if(myVal != ""){
 
-        $(".list").append("<div class='row'>"+
-            " <i onclick='deleteItem(this)' class='fas fa-trash'></i>" +
-            "<span contenteditable='true'>" + myVal +"</span>"+
-            //demonstrating adding a class, not important for project necessarily
-            // "<button onclick='gogreen(this)'>highlight</button>"+
-            "</div>");
+        $(".myList").append(
+            "<li  class='list-group-item' >"+ "<span contenteditable='true'>" + myVal + "</span>" +
+            "<button class='btn btn-dark float-right' type='button' onclick='deleteItem(this)'>Delete Item</button>" +
+            "</li>");
         $(".myInput").val("");
         console.log(listItems);
         $(".row:even").css("background-color", "#dadfea");
@@ -49,8 +40,7 @@ function deleteItem(element) {
 
 }
 
-function gogreen(element){
-    //no . before active, not sure why
-    $(element).parent().addClass("active");
-    $(element).parent().find('.icon').remove();
+
+function completeItem() {
+//code for marking an item complete
 }
