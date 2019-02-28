@@ -36,10 +36,12 @@ function completeItem(element) {
         $(element).parent().remove();
 
         $('.completedList').append($(element.outerHTML));
+    //    fixthis!
     });
 }
 
 function deleteAllItems() {
     $(".myList").empty();
+//    add modal?
 }
 
