@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>JQuery</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -14,22 +15,37 @@
 
 <body>
     <div class="container">
-        <h1>To Do</h1>
+        <div class="top">
 
-        <div class="input-group">
-            <input type="text" class="form-control myInput" placeholder="To Do..." aria-describedby="button-addon4" onkeyup="checkKey(event)">
-            <div class="input-group-append" id="button-addon4">
-                <button class="btn btn-outline-secondary" type="button" onclick="addItem()">Add Item</button>
+            <h1>To Do</h1>
+
+            <div class="input-group">
+                <input type="text" class="form-control myInput" placeholder="To Do..." aria-describedby="button-addon4" onkeyup="checkKey(event)">
+                <div class="input-group-append" id="button-addon4">
+                    <button class="btn btn-dark" type="button" onclick="addItem()">Add Item</button>
+                </div>
+            </div>
+            <div class="active-list">
+                <ul class="list-group myList">
+
+                </ul>
+            </div>
+            <button class="btn btn-outline-danger deleteAll" type="button" onclick="deleteAllItems()">Delete All</button>
+
+        </div>
+
+        <div class="bottom">
+            <div class="completed"><a class="btn-lg btn-outline-dark completed" data-toggle="collapse" href="#collapse-me" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Completed
+            </a></div>
+
+            <div class="collapse" id="collapse-me">
+                <ul class="list-group completedList">
+
+                </ul>
+
             </div>
         </div>
-        <div>
-            <ul class="list-group myList">
-
-            </ul>
-        </div>
-
-
-
     </div>
 
 

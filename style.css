@@ -1,23 +1,60 @@
 body {
     height: auto;
     width: 100%;
+    font-family: 'Roboto', sans-serif;
+
 }
 
 .container {
-    min-height: 500px;
+
+    margin: 0 auto;
+    margin-top: 30px;
     height: auto;
     width: 90%;
-    margin: 30px;
     border-color: black;
     border-radius: 25px;
-    background-color: #dadfea;
+    background-color: slateblue;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.top{
+    min-height: 500px;
+    margin: 0 auto;
+    margin-top: 30px;
+    height: auto;
+    width: 80%;
+    border-color: black;
+    border-radius: 25px;
+    background-color: greenyellow;
+    padding: 20px;
+    position: relative;
+}
+
+.bottom{
+    height: auto;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 80%;
+    border-color: black;
+    border-radius: 25px;
+    background-color: greenyellow;
+    padding-top: 10px;
 }
 
 h1 {
-    text-align: center;
+     text-align: center;
 }
 
+.completed{
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 25px;
+}
 
+.myList {
+    margin-top: 15px;
+    padding-bottom: 30px;
+}
 
 
 .list{
@@ -28,4 +65,15 @@ h1 {
 }
 .active{
     color: green;
+}
+
+.btn{
+    border:0 solid transparent;
+}
+
+.deleteAll {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 15px;
 }
