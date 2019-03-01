@@ -4,9 +4,15 @@ function addItem() {
     if(myVal != ""){
 
         $(".myList").append(
-            "<li  class='list-group-item my-item' >"+ "<span contenteditable='true'>" + myVal + "</span>" +
-            "<button class='btn btn-secondary float-right' type='button' onclick='deleteItem(this)'>Delete</button>" +
-            "<button class='btn btn-warning float-right' type='button' onclick='completeItem(this)'>Completed</button>" +
+            "<li  class='list-group-item my-item' >"+ "<div contenteditable='true'>" + myVal + "</div>" +
+            "<div class='dropdown flex-nowrap'>" +
+            "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
+            "<i class='fas fa-cog'></i>" + " " + "</button>" +
+            "<div class='dropdown-menu' aria-labelledby=dropdownMenu2'>" +
+            "<button class='btn btn-secondary dropdown-item' type='button' onclick='addTask(this)'>Add Task</button>" +
+            "<button class='btn btn-warning dropdown-item' type='button' onclick='completeItem(this)'>Complete</button>" +
+            "<button class='btn btn-secondary dropdown-item' type='button' onclick='deleteItem(this)'>Delete</button>" +
+            "</div>" + "</div>" +
             "</li>");
         $(".myInput").val("");
 
@@ -32,8 +38,8 @@ function deleteItem(element) {
 
 function completeItem(element, event) {
     console.log("completing");
-    $(element).parent().fadeOut("medium", function(){
-        $(element).parent().remove();
+    $(element).parent(list-group-item).fadeOut("medium", function(){
+        $(element).parent(list-group-item).remove();
 
         $(".completedList").append($(event.target.innerHTML));
     //    fixthis!
@@ -42,10 +48,15 @@ function completeItem(element, event) {
 
 function deleteAllItems() {
     let check = confirm("Are you sure you want to delete your To Do items?");
-    if (check == true) {
+    if (check === true) {
         $(".myList").empty();
     } else {
 
     }
 }
 
+function addTask(element) {
+
+}
+
+//FIX DROPDOWN BUTTON FUNCTIONS TO ACTUALLY WORK
