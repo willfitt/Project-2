@@ -30,18 +30,22 @@ function deleteItem(element) {
 }
 
 
-function completeItem(element) {
+function completeItem(element, event) {
     console.log("completing");
     $(element).parent().fadeOut("medium", function(){
         $(element).parent().remove();
 
-        $('.completedList').append($(element.outerHTML));
+        $(".completedList").append($(event.target.innerHTML));
     //    fixthis!
     });
 }
 
 function deleteAllItems() {
-    $(".myList").empty();
-//    add modal?
+    let check = confirm("Are you sure you want to delete your To Do items?");
+    if (check == true) {
+        $(".myList").empty();
+    } else {
+
+    }
 }
 
