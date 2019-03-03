@@ -1,10 +1,19 @@
+
+let countId = 0;
+
+function count() {
+    countId ++;
+    return countId;
+
+}
 function addItem() {
     let myVal = $(".myInput").val();
     let listItems = $(".myList").children();
+    let listArray = []
     if(myVal != ""){
-
+        count();
         $(".myList").append(
-            "<li  class='list-group-item my-item' >"+ "<div contenteditable='true'>" + myVal + "</div>" +
+            "<li class='list-group-item my-item' id='countId' >"+ "<div contenteditable='true'>" + myVal + "</div>" +
             "<div class='dropdown flex-nowrap'>" +
             "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
             "<i class='fas fa-cog'></i>" + " " + "</button>" +
@@ -30,8 +39,8 @@ function checkKey(event){
 
 //the element parameter is arbitrary, could be anything as long as its the same in both spots
 function deleteItem(element) {
-    $(element).parent().fadeOut("medium", function(){
-        $(element).parent().remove();
+    $("#countId").fadeOut("medium", function(){
+        $("#countId").remove();
     });
 }
 
@@ -54,6 +63,8 @@ function deleteAllItems() {
 
     }
 }
+
+
 
 function addTask(element) {
 
