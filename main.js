@@ -2,9 +2,8 @@
 let countId = 0;
 
 function count() {
-    countId ++;
+    countId++;
     return countId;
-
 }
 function addItem() {
     let myVal = $(".myInput").val();
@@ -12,15 +11,16 @@ function addItem() {
     let listArray = []
     if(myVal != ""){
         count();
+        console.log(countId);
         $(".myList").append(
-            "<li class='list-group-item my-item' id='countId' >"+ "<div contenteditable='true'>" + myVal + "</div>" +
+            "<li class='list-group-item my-item' id='"+countId+"'>"+ "<div contenteditable='true'>" + myVal + "</div>" +
             "<div class='dropdown flex-nowrap'>" +
             "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
             "<i class='fas fa-cog'></i>" + " " + "</button>" +
             "<div class='dropdown-menu' aria-labelledby=dropdownMenu2'>" +
             "<button class='btn btn-secondary dropdown-item' type='button' onclick='addTask(this)'>Add Task</button>" +
-            "<button class='btn btn-warning dropdown-item' type='button' onclick='completeItem(this)'>Complete</button>" +
-            "<button class='btn btn-secondary dropdown-item' type='button' onclick='deleteItem(this)'>Delete</button>" +
+            "<button class='btn btn-warning dropdown-item' type='button' onclick='completeItem(event, " + countId + ")'>Complete</button>" +
+            "<button class='btn btn-secondary dropdown-item' type='button' onclick='deleteItem(this, " + countId + ")'>Delete</button>" +
             "</div>" + "</div>" +
             "</li>");
         $(".myInput").val("");
@@ -38,20 +38,16 @@ function checkKey(event){
 }
 
 //the element parameter is arbitrary, could be anything as long as its the same in both spots
-function deleteItem(element) {
-    $("#countId").fadeOut("medium", function(){
-        $("#countId").remove();
-    });
+function deleteItem(element, id) {
+    $("#" + id).fadeOut("medium", function(){
+        $("#" + id).remove();});
 }
 
 
-function completeItem(element, event) {
-    console.log("completing");
-    $(element).parent(list-group-item).fadeOut("medium", function(){
-        $(element).parent(list-group-item).remove();
-
-        $(".completedList").append($(event.target.innerHTML));
-    //    fixthis!
+function completeItem(event, id) {
+    $("#" + id).fadeOut("medium", function(){
+        $(".completedList").append($("#" + id).innerHTML);
+        $("#" + id).remove();
     });
 }
 
