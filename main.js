@@ -44,18 +44,15 @@ function checkKey(event){
     }
 }
 
-function addTask(elemen, id) {
+function addTask(element, id) {
     // let myTaskVal = $(".myTaskInput").val();
-    $("<div contenteditable='true'>...add task</div>").appendTo($("#task" + id));
+    $("<div><i class='far fa-circle'></i><span>     </span><span contenteditable='true' onkeyup='leaveBox()' placeholder='...add Task'>...add task</span></div>").appendTo($("#task" + id));
 }
-
-
 
 function deleteItem(element, id) {
     $("#count" + id).fadeOut("medium", function(){
         $("#count" + id).remove();});
 }
-
 
 function completeItem(event, id) {
     $("#count" + id).fadeOut("medium", function(){
