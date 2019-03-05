@@ -30,13 +30,14 @@ body {
 }
 
 .bottom{
-    height: auto;
+    min-height: 200px;
     margin: 0 auto;
     margin-top: 20px;
     width: 80%;
     border-color: black;
     border-radius: 25px;
     padding-top: 10px;
+    position: relative;
 }
 
 h1 {
@@ -70,6 +71,17 @@ h1 {
 }
 
 .deleteAll {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 15px;
+}
+
+.deleteAllCompleted{
+    padding-top: 55px;
+}
+
+.deleteAllCompletedButton {
     position: absolute;
     right: 0;
     bottom: 0;

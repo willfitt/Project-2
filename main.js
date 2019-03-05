@@ -33,7 +33,7 @@ function addItem() {
             "<i class='fas fa-cog'></i>" + " " + "</button>" +
             "<div class='dropdown-menu' aria-labelledby=dropdownMenu2'>" +
             "<button class='btn btn-secondary dropdown-item' type='button' onclick='addTask(this, " + taskId + ")'>Add Task</button>" +
-            "<button class='btn btn-warning dropdown-item' type='button' onclick='completeItem(event, " + countId + ")'>Complete</button>" +
+            "<button class='btn btn-warning dropdown-item' type='button' onclick='completeItem(this, " + countId + ")'>Complete</button>" +
             "<button class='btn btn-secondary dropdown-item' type='button' onclick='deleteItem(this, " + countId + ")'>Delete</button>" +
             "</div>" + "</div>" + "</li>" +
             "<div class='myTaskList' id='task"+taskId+"'></div>" +
@@ -54,7 +54,7 @@ function checkKey(event){
 function addTask(element, id) {
     // let myTaskVal = $(".myTaskInput").val();
     taskItemCount();
-    $("<div  id='taskItem"+taskItemId+"' ><i class='far fa-circle'></i><span>     </span><span contenteditable='true' onkeyup='leaveBox()' placeholder='...add Task'>...add task</span><button class=' btn btn-danger' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></div>").appendTo($("#task" + id));
+    $("<div  id='taskItem"+taskItemId+"' ><i class='far fa-circle'></i><span>     </span><span contenteditable='true' onkeyup='leaveBox()' placeholder='...add Task'>...add task</span><button class=' btn btn-danger btn-sm' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></div>").appendTo($("#task" + id));
 }
 
 function deleteItem(element, id) {
@@ -67,17 +67,23 @@ function deleteTask(element, id) {
         $("#taskItem" + id).remove();});
 }
 
-function completeItem(event, id) {
-    $("#count" + id).fadeOut("medium", function(){
-        $(".completedList").append($("#count" + id).valueOf($(".my-item")));
-        $("#count" + id).remove();
-    });
+function completeItem(element, id) {
+    $(".completedList").append($("#count" + id));
 }
 
 function deleteAllItems() {
     let check = confirm("Are you sure you want to delete your To Do items?");
     if (check === true) {
         $(".myList").empty();
+    } else {
+
+    }
+}
+
+function deleteAllCompletedItems() {
+    let check = confirm("Are you sure you want to delete your Completed items?");
+    if (check === true) {
+        $(".completedList").empty();
     } else {
 
     }
