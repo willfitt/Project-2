@@ -1,26 +1,33 @@
 
 let countId = 0;
 let taskId = 0;
+let taskItemId = 0;
 function count() {
     countId++;
     return countId;
 }
 
-function taskCount() {
+function taskListCount() {
     taskId++;
     return taskId;
 }
+
+function taskItemCount() {
+    taskItemId++;
+    return taskItemId;
+}
+
 function addItem() {
     let myVal = $(".myInput").val();
     let listItems = $(".myList").children();
     let listArray = [];
     if(myVal != ""){
         count();
-        taskCount();
+        taskListCount();
         console.log(countId);
         $(".myList").append(
-            "<div class='itemContainer'>" +
-            "<li class='list-group-item my-item' id='count"+countId+"'>"+ "<div contenteditable='true'>" + myVal + "</div>" +
+            "<div class='itemContainer' id='count"+countId+"'>" +
+            "<li class='list-group-item my-item'>"+ "<div contenteditable='true'>" + myVal + "</div>" +
             "<div class='dropdown flex-nowrap'>" +
             "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
             "<i class='fas fa-cog'></i>" + " " + "</button>" +
@@ -46,12 +53,18 @@ function checkKey(event){
 
 function addTask(element, id) {
     // let myTaskVal = $(".myTaskInput").val();
-    $("<div><i class='far fa-circle'></i><span>     </span><span contenteditable='true' onkeyup='leaveBox()' placeholder='...add Task'>...add task</span></div>").appendTo($("#task" + id));
+    taskItemCount();
+    $("<div  id='taskItem"+taskItemId+"' ><i class='far fa-circle'></i><span>     </span><span contenteditable='true' onkeyup='leaveBox()' placeholder='...add Task'>...add task</span><button class=' btn btn-danger' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></div>").appendTo($("#task" + id));
 }
 
 function deleteItem(element, id) {
     $("#count" + id).fadeOut("medium", function(){
-        $("#count" + id).remove();});
+        $("#count" + id).empty();});
+}
+
+function deleteTask(element, id) {
+    $("#taskItem" + id).fadeOut("medium", function(){
+        $("#taskItem" + id).remove();});
 }
 
 function completeItem(event, id) {

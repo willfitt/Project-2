@@ -88,3 +88,7 @@ h1 {
 .myTaskList {
     padding-left: 40px;
 }
+
+.task-remove {
+    right: 0;
+}
