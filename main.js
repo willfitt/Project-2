@@ -54,7 +54,7 @@ function checkKey(event){
 function addTask(element, id) {
     // let myTaskVal = $(".myTaskInput").val();
     taskItemCount();
-    $("<div  id='taskItem"+taskItemId+"' ><i class='far fa-circle'></i><span>     </span><span contenteditable='true' onkeyup='leaveBox()' placeholder='...add Task'>...add task</span><button class=' btn btn-danger btn-sm' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></div>").appendTo($("#task" + id));
+    $("<ul class='taskItemBox' id='taskItem"+taskItemId+"'><li class='taskButton' onkeyup='leaveBox()' ></li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' ><button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></ul>").appendTo($("#task" + id));
 }
 
 function deleteItem(element, id) {
