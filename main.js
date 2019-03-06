@@ -3,6 +3,7 @@
 let countId = localStorage.getItem("countId") || 0;
 let taskId = localStorage.getItem("taskId") || 0;
 let taskItemId = localStorage.getItem("taskItemId") || 0;
+let itemArray = retrieveItems() || [];
 
 
 function count() {
@@ -23,12 +24,34 @@ function taskItemCount() {
     return taskItemId;
 }
 
-function renderItems() {
-    for (let i = 0; i < localStorage.length; i++) {
-        addItem()
-    }
-
+function retrieveItems() {
+    const items = localStorage.getItem('itemArray');
+    console.log(items);
+    return JSON.parse(items);
 }
+
+function renderItems() {
+    for (let i = 0; i < itemArray.length; i++) {
+
+
+        let item = itemArray[i];
+        $(".myList").append(
+            "<div class='itemContainer' id='count"+item.countId+"'>" +
+            "<li class='list-group-item my-item'>"+ "<div contenteditable='true'>" + item.myVal + "</div>" +
+            "<div class='dropdown flex-nowrap'>" +
+            "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
+            "<i class='fas fa-cog'></i>" + " " + "</button>" +
+            "<div class='dropdown-menu' aria-labelledby=dropdownMenu2'>" +
+            "<button class='btn btn-secondary dropdown-item' type='button' onclick='addTask(this, " + item.taskId + ")'>Add Task</button>" +
+            "<button class='btn btn-warning dropdown-item' type='button' onclick='completeItem(this, " + item.countId + ")'>Complete</button>" +
+            "<button class='btn btn-secondary dropdown-item' type='button' onclick='deleteItem(this, " + item.countId + ")'>Delete</button>" +
+            "</div>" + "</div>" + "</li>" +
+            "<div class='myTaskList' id='task"+item.taskId+"'></div>" +
+            "</div>");
+    }
+}
+
+renderItems();
 
 function addItem() {
 
@@ -58,8 +81,9 @@ function addItem() {
             taskItemId: taskItemId,
             myVal: myVal
         };
-        localStorage.setItem(taskId, JSON.stringify(taskStorageObject));
-        console.log((taskStorageObject))
+        itemArray.push(taskStorageObject);
+        localStorage.setItem('itemArray', JSON.stringify(itemArray));
+        console.log(itemArray)
     }
     $(".myInput").focus();
 }
