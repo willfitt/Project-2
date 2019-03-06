@@ -1,26 +1,38 @@
 
-let countId = 0;
-let taskId = 0;
-let taskItemId = 0;
+
+let countId = localStorage.getItem("countId") || 0;
+let taskId = localStorage.getItem("taskId") || 0;
+let taskItemId = localStorage.getItem("taskItemId") || 0;
+
+
 function count() {
     countId++;
+    localStorage.setItem("countId", countId);
     return countId;
 }
 
 function taskListCount() {
     taskId++;
+    localStorage.setItem("taskId", taskId);
     return taskId;
 }
 
 function taskItemCount() {
     taskItemId++;
+    localStorage.setItem("taskItemId", taskItemId);
     return taskItemId;
 }
 
+function renderItems() {
+    for (let i = 0; i < localStorage.length; i++) {
+        addItem()
+    }
+
+}
+
 function addItem() {
+
     let myVal = $(".myInput").val();
-    let listItems = $(".myList").children();
-    let listArray = [];
     if(myVal != ""){
         count();
         taskListCount();
@@ -39,9 +51,23 @@ function addItem() {
             "<div class='myTaskList' id='task"+taskId+"'></div>" +
             "</div>");
         $(".myInput").val("");
+        $(".myInput").val("");
+        let taskStorageObject = {
+            taskId: taskId,
+            countId: countId,
+            taskItemId: taskItemId,
+            myVal: myVal
+        };
+        localStorage.setItem(taskId, JSON.stringify(taskStorageObject));
+        console.log((taskStorageObject))
     }
     $(".myInput").focus();
 }
+
+// function getTaskItems() {
+//     const taskString = localStorage.getItem('taskId');
+//     return JSON.parse(taskString);
+// }
 
 function checkKey(event){
     switch(event.which){
@@ -52,7 +78,7 @@ function checkKey(event){
 }
 
 function addTask(element, id) {
-    // let myTaskVal = $(".myTaskInput").val();
+
     taskItemCount();
     $("<ul class='taskItemBox' id='taskItem"+taskItemId+"'><li class='taskButton' onkeyup='leaveBox()' ></li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' ><button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></ul>").appendTo($("#task" + id));
 }
