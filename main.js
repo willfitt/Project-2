@@ -118,7 +118,10 @@ function deleteTask(element, id) {
 }
 
 function completeItem(element, id) {
-    $(".completedList").append($("#count" + id));
+    $("#count" + id).fadeOut("medium", function () {
+        $(".completedList").append($("#count" + id));
+        $("#count" + id).fadeIn("medium", function (){});
+    });
 }
 
 function deleteAllItems() {
