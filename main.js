@@ -10,6 +10,7 @@ function count() {
     countId++;
     localStorage.setItem("countId", countId);
     return countId;
+    console.log("logging")
 }
 
 function taskListCount() {
@@ -33,22 +34,31 @@ function retrieveItems() {
 function renderItems() {
     for (let i = 0; i < itemArray.length; i++) {
 
-
         let item = itemArray[i];
         $(".myList").append(
             "<div class='itemContainer' id='count"+item.countId+"'>" +
-            "<li class='list-group-item my-item'>"+ "<div contenteditable='true'>" + item.myVal + "</div>" +
+            "<li class='list-group-item my-item'>"+ "<div contenteditable='true' onkeyup='count()'>" + item.myVal + "</div>" +
             "<div class='dropdown flex-nowrap'>" +
             "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
             "<i class='fas fa-cog'></i>" + " " + "</button>" +
             "<div class='dropdown-menu' aria-labelledby=dropdownMenu2'>" +
-            "<button class='btn btn-secondary dropdown-item' type='button' onclick='addTask(this, " + item.taskId + ")'>Add Task</button>" +
+            "<button class='btn btn-secondary dropdown-item' type='button' onclick='addTask(this, " + item.taskId + ", " + item.countId +")'>Add Task</button>" +
             "<button class='btn btn-warning dropdown-item' type='button' onclick='completeItem(this, " + item.countId + ")'>Complete</button>" +
             "<button class='btn btn-secondary dropdown-item' type='button' onclick='deleteItem(this, " + item.countId + ")'>Delete</button>" +
             "</div>" + "</div>" + "</li>" +
             "<div class='myTaskList' id='task"+item.taskId+"'></div>" +
             "</div>");
+            for(let l = 0; l < item.subTasks.length; l++) {
+
+                let subTask = item.subTasks[l];
+                $("#task" + item.taskId).append(
+                    "<ul class='taskItemBox' id='taskItem" + subTask.taskItemId + "'><li class='taskButton' onkeyup='saveItemTask(" + subTask.taskId + ", " + subTask.counterId +")'>" +
+                    "</li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' >" +
+                    "<button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + subTask.taskItemId + ")'>Delete</button></ul>");
+
+            }
     }
+    
 }
 
 renderItems();
@@ -67,7 +77,7 @@ function addItem() {
             "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
             "<i class='fas fa-cog'></i>" + " " + "</button>" +
             "<div class='dropdown-menu' aria-labelledby=dropdownMenu2'>" +
-            "<button class='btn btn-secondary dropdown-item' type='button' onclick='addTask(this, " + taskId + ")'>Add Task</button>" +
+            "<button class='btn btn-secondary dropdown-item' type='button' onclick='addTask(this, " + taskId + ", " + countId +")'>Add Task</button>" +
             "<button class='btn btn-warning dropdown-item' type='button' onclick='completeItem(this, " + countId + ")'>Complete</button>" +
             "<button class='btn btn-secondary dropdown-item' type='button' onclick='deleteItem(this, " + countId + ")'>Delete</button>" +
             "</div>" + "</div>" + "</li>" +
@@ -78,8 +88,8 @@ function addItem() {
         let taskStorageObject = {
             taskId: taskId,
             countId: countId,
-            taskItemId: taskItemId,
-            myVal: myVal
+            myVal: myVal,
+            subTasks: []
         };
         itemArray.push(taskStorageObject);
         localStorage.setItem('itemArray', JSON.stringify(itemArray));
@@ -87,11 +97,6 @@ function addItem() {
     }
     $(".myInput").focus();
 }
-
-// function getTaskItems() {
-//     const taskString = localStorage.getItem('taskId');
-//     return JSON.parse(taskString);
-// }
 
 function checkKey(event){
     switch(event.which){
@@ -101,16 +106,44 @@ function checkKey(event){
     }
 }
 
-function addTask(element, id) {
+function renderTask() {
+
+}
+
+function addTask(element, id, counterId) {
 
     taskItemCount();
-    $("<ul class='taskItemBox' id='taskItem"+taskItemId+"'><li class='taskButton' onkeyup='leaveBox()' ></li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' ><button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></ul>").appendTo($("#task" + id));
+    $("#task" + id).append("<ul class='taskItemBox' id='taskItem"+ taskItemId +"'><li class='taskButton' onkeyup='saveItemTask(" + taskId + ", " + counterId +")'></li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' ><button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></ul>");
+    createItemTask(taskItemId, counterId);
+}
+
+function createItemTask(taskItemId, counterId) {
+    
+    let taskStorageObject;
+    for (i = 0; i < itemArray.length; i++) {
+       let currentItem = itemArray[i];
+       if (currentItem.countId === counterId) {
+        taskStorageObject = currentItem;
+            break;
+       }
+    }
+
+    console.log(taskStorageObject);
+
+    let taskToSave = {
+        taskItemId: taskItemId,
+        value: "",  
+    };
+  
+    taskStorageObject.subTasks.push(taskToSave);
+    console.log(itemArray);
+    localStorage.setItem('itemArray', JSON.stringify(itemArray))
 }
 
 function deleteItem(element, id) {
     $("#count" + id).fadeOut("medium", function(){
         $("#count" + id).empty();});
-}
+    }
 
 function deleteTask(element, id) {
     $("#taskItem" + id).fadeOut("medium", function(){
