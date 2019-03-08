@@ -35,9 +35,26 @@ function renderItems() {
     for (let i = 0; i < itemArray.length; i++) {
 
         let item = itemArray[i];
+        if(item.complete){
+            $(".completedList").append(
+                "<div class='itemContainer' id='count"+item.countId+"'>" +
+                "<li class='list-group-item my-item'>"+ "<div contenteditable='true' onkeyup='checkKeyEditTask(event, this)'>" + item.myVal + "</div>" +
+                "</li><div class='myTaskList' id='task"+item.taskId+"'></div></div>");
+                for(let l = 0; l < item.subTasks.length; l++) {
+    
+                    let subTask = item.subTasks[l];
+                    $("#task" + item.taskId).append(
+                        "<ul class='taskItemBox' id='taskItem" + subTask.taskItemId + "'><li class='taskButton' onkeyup='checkKeySaveTask(event)'>" +
+                        "</li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' >" +
+                        "<button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + subTask.taskItemId + ")'>Delete</button></ul>");    
+                }            
+        }
+        
+        else{
+
         $(".myList").append(
             "<div class='itemContainer' id='count"+item.countId+"'>" +
-            "<li class='list-group-item my-item'>"+ "<div contenteditable='true' onkeyup='count()'>" + item.myVal + "</div>" +
+            "<li class='list-group-item my-item'>"+ "<div contenteditable='true' onkeyup='checkKeyEditTask(event, this)'>" + item.myVal + "</div>" +
             "<div class='dropdown flex-nowrap'>" +
             "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
             "<i class='fas fa-cog'></i>" + " " + "</button>" +
@@ -52,15 +69,13 @@ function renderItems() {
 
                 let subTask = item.subTasks[l];
                 $("#task" + item.taskId).append(
-                    "<ul class='taskItemBox' id='taskItem" + subTask.taskItemId + "'><li class='taskButton' onkeyup='saveItemTask(" + subTask.taskId + ", " + subTask.counterId +")'>" +
+                    "<ul class='taskItemBox' id='taskItem" + subTask.taskItemId + "'><li class='taskButton' onkeyup='checkKeySaveTask(event)'>" +
                     "</li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' >" +
                     "<button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + subTask.taskItemId + ")'>Delete</button></ul>");
 
             }
-    }
-    
+    }}    
 }
-
 renderItems();
 
 function addItem() {
@@ -69,10 +84,9 @@ function addItem() {
     if(myVal != ""){
         count();
         taskListCount();
-        console.log(countId);
         $(".myList").append(
             "<div class='itemContainer' id='count"+countId+"'>" +
-            "<li class='list-group-item my-item'>"+ "<div contenteditable='true'>" + myVal + "</div>" +
+            "<li class='list-group-item my-item'>"+ "<div contenteditable='true' onkeyup='checkKeyEditTask(event, this)'>" + myVal + "</div>" +
             "<div class='dropdown flex-nowrap'>" +
             "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded=false'>" +
             "<i class='fas fa-cog'></i>" + " " + "</button>" +
@@ -89,31 +103,57 @@ function addItem() {
             taskId: taskId,
             countId: countId,
             myVal: myVal,
+            complete: false,
             subTasks: []
         };
         itemArray.push(taskStorageObject);
-        localStorage.setItem('itemArray', JSON.stringify(itemArray));
-        console.log(itemArray)
+        saveToLocalStorage()
     }
     $(".myInput").focus();
 }
 
-function checkKey(event){
-    switch(event.which){
-        case 13:
-            addItem();
-            break;
-    }
+
+function checkKeyAddItem(event) {
+    
+    if(event.which == 13) addItem()
+    
 }
 
-function renderTask() {
+function checkKeyEditTask(event, task) {
+    console.log("asdf")
+    console.log(task)
+    let text =$(task).child().val()
+    console.log(text)
+    //if(event.which == 13) editItem(myVal, id)
+}
 
+
+
+
+
+
+function checkKeySaveTask(event) {
+    if(event.which == 13) saveItemTask()
+}
+
+function saveToLocalStorage() {
+    localStorage.setItem('itemArray', JSON.stringify(itemArray));
+}
+
+// Do these two functions
+function editItem(myVal, id) {
+    console.log(myVal);
+    console.log(id)
+}
+
+function saveItemTask() {
+    
 }
 
 function addTask(element, id, counterId) {
 
     taskItemCount();
-    $("#task" + id).append("<ul class='taskItemBox' id='taskItem"+ taskItemId +"'><li class='taskButton' onkeyup='saveItemTask(" + taskId + ", " + counterId +")'></li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' ><button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></ul>");
+    $("#task" + id).append("<ul class='taskItemBox' id='taskItem"+ taskItemId +"'><li class='taskButton'></li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' onkeyup='checkKeySaveTask(event)'><button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></ul>");
     createItemTask(taskItemId, counterId);
 }
 
@@ -151,26 +191,51 @@ function deleteTask(element, id) {
 }
 
 function completeItem(element, id) {
+    $(element).parent().parent().remove(); 
     $("#count" + id).fadeOut("medium", function () {
         $(".completedList").append($("#count" + id));
         $("#count" + id).fadeIn("medium", function (){});
     });
+    updateItemComplete(id)    
+      
 }
+
+function updateItemComplete(id) {
+    itemArray.forEach((item, index) => {        
+        if (item.taskId == id) {
+            itemArray[index].complete = true;              
+        }
+    });
+    saveToLocalStorage()
+}
+
+function updateItemValue(id, myVal) {
+    itemArray.forEach((item, index) => {        
+        if (item.taskId == id) {
+            itemArray[index].myVal = myVal;              
+        }
+    });
+    saveToLocalStorage()
+}
+
 
 function deleteAllItems() {
     let check = confirm("Are you sure you want to delete your To Do items?");
     if (check === true) {
-        $(".myList").empty();
-    } else {
-
-    }
+        $(".myList").empty();        
+        itemArray = itemArray.filter(item => item.complete == true)      
+        saveToLocalStorage();
+    } 
 }
 
 function deleteAllCompletedItems() {
     let check = confirm("Are you sure you want to delete your Completed items?");
     if (check === true) {
         $(".completedList").empty();
-    } else {
-
-    }
+        itemArray = itemArray.filter(item => item.complete == false)      
+        saveToLocalStorage();
+    } 
 }
+
+
+// onkeyup='saveItemTask(" + subTask.taskId + ", " + subTask.counterId +")
