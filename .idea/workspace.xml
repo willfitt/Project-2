@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="02afd80d-a675-4fb8-ba49-471fe072220c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -15,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.30772263">
+    <splitter split-orientation="horizontal" split-proportion="0.31008667">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
@@ -36,8 +35,8 @@
               <file pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/main.js">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="796">
-                      <caret line="120" column="49" lean-forward="true" selection-start-line="120" selection-start-column="49" selection-end-line="120" selection-end-column="49" />
+                    <state relative-caret-position="452">
+                      <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
                     </state>
                   </provider>
                 </entry>
@@ -70,6 +69,8 @@
       <find>taskStorage</find>
       <find>3</find>
       <find>taskItemId</find>
+      <find>leave</find>
+      <find>itemArray</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -133,7 +134,7 @@
       <workItem from="1551636964061" duration="11637000" />
       <workItem from="1551755054243" duration="9718000" />
       <workItem from="1551838220784" duration="12276000" />
-      <workItem from="1551927603597" duration="242000" />
+      <workItem from="1551927603597" duration="2217000" />
     </task>
     <task id="LOCAL-00001" summary="importing work for class to help get started">
       <created>1551148658206</created>
@@ -226,15 +227,21 @@
       <option name="project" value="LOCAL" />
       <updated>1551851053591</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fixed animation on complete button">
+      <created>1551928065811</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1551928065811</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68859000" />
+    <option name="totallyTimeSpent" value="70834000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.24980299" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -272,7 +279,8 @@
     <MESSAGE value="fixed completed button and added some styling throughout the page" />
     <MESSAGE value="trying to local storage to work : (" />
     <MESSAGE value="added most local storage functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="added most local storage functionality" />
+    <MESSAGE value="fixed animation on complete button" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed animation on complete button" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.html">
@@ -291,8 +299,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="796">
-          <caret line="120" column="49" lean-forward="true" selection-start-line="120" selection-start-column="49" selection-end-line="120" selection-end-column="49" />
+        <state relative-caret-position="452">
+          <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
         </state>
       </provider>
     </entry>
