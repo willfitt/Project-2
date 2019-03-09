@@ -1,10 +1,8 @@
 
-
 let countId = localStorage.getItem("countId") || 0;
 let taskId = localStorage.getItem("taskId") || 0;
 let taskItemId = localStorage.getItem("taskItemId") || 0;
 let itemArray = retrieveItems() || [];
-
 
 function count() {
     countId++;
@@ -99,7 +97,6 @@ function addItem() {
             "<div class='myTaskList' id='task"+taskId+"'></div>" +
             "</div>");
         $(".myInput").val("");
-        $(".myInput").val("");
         let taskStorageObject = {
             taskId: taskId,
             countId: countId,
@@ -113,16 +110,18 @@ function addItem() {
     $(".myInput").focus();
 }
 
+function addTask(element, taskId, counterId) {
+    taskItemCount();
+    $("#task" + taskId).append("<ul class='taskItemBox' id='taskItem"+ taskItemId +"'><li class='taskButton'></li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' onkeyup='checkKeySaveTask(event, this, " + taskId + ", " + taskItemId + ")'><button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></ul>");
+    createItemTask(taskItemId, counterId);
+}
 
-function checkKeyAddItem(event) {
-    
-    if(event.which == 13) addItem()
-    
+function checkKeyAddItem(event) {    
+    if(event.which == 13) addItem()    
 }
 
 function checkKeyEditTask(event, task, id) {
-    let myVal = $(task).text()
-    
+    let myVal = $(task).text()    
     if(event.which == 13) {
         editItem(myVal, id);
         $(task).blur()
@@ -132,8 +131,7 @@ function checkKeyEditTask(event, task, id) {
 function checkKeySaveTask(event, task, id, taskId) {
     let myTaskVal = $(task).val();
     console.log(myTaskVal)
-    if(event.which == 13) {
-     
+    if(event.which == 13) {     
         saveItemTask(myTaskVal, id, taskId);
         $(task).blur()
     }
@@ -143,9 +141,7 @@ function saveToLocalStorage() {
     localStorage.setItem('itemArray', JSON.stringify(itemArray));
 }
 
-function editItem(myVal, id) {
-    
-
+function editItem(myVal, id) {   
     itemArray.forEach((item, index) => {        
         if (item.taskId == id) {
             itemArray[index].myVal = myVal;              
@@ -162,14 +158,8 @@ function saveItemTask(myTaskVal, id, taskId) {
            const parentTask = itemArray[itemIndex]
            const subTasks = parentTask.subTasks;
         
-            subTasks.forEach((taskItem, taskIndex) => {  
-
-                console.log(taskItem.taskItemId)
-                console.log("________")
-                console.log(taskId)
-             
-                if (taskItem.taskItemId == taskId) {
-                   
+            subTasks.forEach((taskItem, taskIndex) => {               
+                if (taskItem.taskItemId == taskId) {                   
                   parentTask.subTasks[taskIndex].value = myTaskVal;              
                 }
                 else
@@ -180,13 +170,6 @@ function saveItemTask(myTaskVal, id, taskId) {
         }
     });
     saveToLocalStorage()    
-}
-
-function addTask(element, taskId, counterId) {
-
-    taskItemCount();
-    $("#task" + taskId).append("<ul class='taskItemBox' id='taskItem"+ taskItemId +"'><li class='taskButton'></li><input class='form-control' placeholder='...add Task' type='text' contenteditable='true' onkeyup='checkKeySaveTask(event, this, " + taskId + ", " + taskItemId + ")'><button class='btn btn-danger btn-sm taskDeleteButton' onclick='deleteTask(this, " + taskItemId + ")'>Delete</button></ul>");
-    createItemTask(taskItemId, counterId);
 }
 
 function createItemTask(taskItemId, counterId) {
@@ -214,13 +197,44 @@ function createItemTask(taskItemId, counterId) {
 }
 
 function deleteItem(element, id) {
-    $("#count" + id).fadeOut("medium", function(){
+    $("#count" + id).fadeOut("medium", function() {
         $("#count" + id).empty();});
-    }
+        console.log("id=", id);
+        console.log(itemArray)
+    for (let i = 0; i < itemArray.length; i++) {       
+        if (itemArray[i].countId == id) {
+            console.log("logging2", i);
+            itemArray.splice(i, 1);      
+            break;          
+        }
+    };
+    saveToLocalStorage()
+    console.log(itemArray)
+
+ }
+
+ function findParentItemByChildId(id) {
+    return itemArray.find(function(item) {
+        return item.subTasks.find(function(childItem) {
+            return childItem.taskItemId == id; 
+        });
+    }); 
+ }
 
 function deleteTask(element, id) {
     $("#taskItem" + id).fadeOut("medium", function(){
         $("#taskItem" + id).remove();});
+
+    let parentItem = findParentItemByChildId(id);
+    for (let i = 0; i < parentItem.subTasks.length; i++) {       
+        if (parentItem.subTasks[i].taskItemId == id) {
+            console.log("childIndex", i);
+            parentItem.subTasks.splice(i, 1);      
+            break;          
+        }
+    };
+
+    saveToLocalStorage()       
 }
 
 function completeItem(element, id) {
@@ -259,6 +273,10 @@ function deleteAllItems() {
         $(".myList").empty();        
         itemArray = itemArray.filter(item => item.complete == true)      
         saveToLocalStorage();
+        localStorage.setItem("countId", 0);
+        localStorage.setItem("taskId", 0);
+        localStorage.setItem("taskItemId", 0);
+
     } 
 }
 
