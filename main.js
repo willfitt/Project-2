@@ -247,7 +247,6 @@ function completeItem(element, id) {
       
 }
 
-
 function updateItemComplete(id) {
     itemArray.forEach((item, index) => {        
         if (item.taskId == id) {
@@ -265,7 +264,6 @@ function updateItemValue(id, myVal) {
     });
     saveToLocalStorage()
 }
-
 
 function deleteAllItems() {
     let check = confirm("Are you sure you want to delete your To Do items?");
